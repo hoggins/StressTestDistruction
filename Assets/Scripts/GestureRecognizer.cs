@@ -17,6 +17,7 @@ public class GestureRecognizer : MonoBehaviour
   public List<Gesture> Gestures;
 
   public float DistanceError = 0.1f;
+  public int GizmosIndex = 0;
 
   private List<Vector2> _readPoints = new List<Vector2>();
 
@@ -208,6 +209,24 @@ public class GestureRecognizer : MonoBehaviour
     {
       _readPoints.Add(Input.mousePosition);
       yield return null;
+    }
+  }
+
+  private void OnDrawGizmosSelected()
+  {
+    try
+    {
+      var g = Gestures[GizmosIndex];
+      for (int i = 0; i < g.Points.Count - 1; i++)
+      {
+        var p1 = g.Points[i];
+        var p2 = g.Points[i + 1];
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(p1 * 3, p2 * 3);
+      }
+    }
+    catch (Exception)
+    {
     }
   }
 }
